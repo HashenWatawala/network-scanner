@@ -16,9 +16,8 @@
 
 ## 📸 Screenshot
 
-<p align="center">
-  <img src="screenshots/gui_screenshot.png" alt="Network Scanner GUI" width="800">
-</p>
+![GUI](https://github.com/user-attachments/assets/481c2d70-0e8c-47f6-aa63-906fc72c0979)
+
 
 ---
 
