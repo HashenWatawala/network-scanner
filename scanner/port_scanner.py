@@ -1,8 +1,10 @@
 import socket
 import threading
-from scanner.config import TIMEOUT, COMMON_PORTS, OUTPUT_FILE
+from scanner.config import TIMEOUT, COMMON_PORTS, OUTPUT_FILE, SERVICES
 from scanner.banner_grabber import grab_banner
 from scanner.utils import format_result
+from colorama import Fore
+
 
 lock = threading.Lock()
 
@@ -14,20 +16,22 @@ def scan_port(target, port, results):
         result = s.connect_ex((target, port))
 
         if result == 0:
+            service = SERVICES.get(port, "Unknown")
             banner = grab_banner(target, port)
-            output = format_result(port, "OPEN", "", banner)
-
+            output = format_result(port, "OPEN", service, banner)
             with lock:
                 print(output)
                 results.append(output)
 
         s.close()
 
-    except:
+    except Exception:
         pass
 
 
-def start_scan(target, ports=COMMON_PORTS):
+def start_scan(target, ports=None):
+    if ports is None:
+        ports = COMMON_PORTS
     print(f"\nScanning {target}...\n")
     print("PORT   STATUS   SERVICE    BANNER")
 
@@ -42,11 +46,12 @@ def start_scan(target, ports=COMMON_PORTS):
     for thread in threads:
         thread.join()
 
-    save_results(results)
+    save_results(target, results)
 
 
-def save_results(results):
-    with open(OUTPUT_FILE, "w") as f:
+def save_results(target, results):
+    with open(OUTPUT_FILE, "a") as f:
+        f.write(f"\n--- Results for {target} ---\n")
         for line in results:
             f.write(line + "\n")
 
