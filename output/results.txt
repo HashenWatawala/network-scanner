@@ -1,0 +1,3 @@
+21     OPEN                220-FileZilla Server version 0.9.41 beta
+80     OPEN                No banner
+443    OPEN                No banner

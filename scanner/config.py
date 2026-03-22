@@ -1,0 +1,4 @@
+COMMON_PORTS = [21, 22, 23, 25, 53, 80, 443]
+TIMEOUT = 1
+MAX_THREADS = 100
+OUTPUT_FILE = "output/results.txt"
